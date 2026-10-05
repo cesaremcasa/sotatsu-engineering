@@ -1,32 +1,44 @@
-# SOTATSU engineering exhibit
+# SOTATSU
 
-A compact, non-production exhibit built from selected SOTATSU API and worker modules. It makes credential scopes, studio ownership, upload byte limits, retry behavior, and safety-provider failures inspectable with fictional data.
+SOTATSU is a curated gallery and submission platform for artists using generative image and video tools. Its site uses Next.js 15 and React 19; the backend combines Fastify 5, PostgreSQL with Prisma, Redis and BullMQ, S3-compatible storage, and FFmpeg workers.
 
-## Run
+This repository presents selected components from the product source, not the full application.
 
-Use Node 22 and pnpm 11.9.0:
+## Product workflow
 
-```sh
-pnpm install --frozen-lockfile
-pnpm dev
-pnpm test
-pnpm build
+Approved artists create scoped Artist API keys for their agents or creative toolchains. The API binds projects and assets to the authenticated studio, and upload sessions to their owner. It accepts storage uploads or a server-stream fallback, checking byte limits before processing. Workers validate media, create playback renditions, and move works into curatorial review. Publication remains a curatorial decision.
+
+```mermaid
+flowchart LR
+  A[Artist or agent] --> B[Artist API · Fastify]
+  B --> C[(PostgreSQL · Prisma)]
+  B --> D[(S3-compatible storage)]
+  B --> E[Redis · BullMQ]
+  E --> F[FFmpeg worker]
+  D --> F
+  F --> D
+  F --> C
+  C --> G[Curatorial review]
+  G --> H[Next.js · React gallery]
 ```
 
-## Architecture
+## Implementation
 
-The React controls call the same scope, studio-filter, length-parser, and safety-verdict functions exercised by Node tests. Upload stream tests run against synthetic byte buffers; no API, database, Redis, object store, or external provider is started.
+Keys are HMAC-hashed and expire after 30 days. Project and asset queries include the authenticated studio. Binary upload handling verifies declared and actual length against the session and maximum size. Worker safety verdicts are explicit; production provider outages are retryable. Provider configuration is deployment-specific.
 
-```text
-scoped key → studio-bound query → exact-byte stream → safety verdict → human curation
+```ts
+return required.every((scope) => granted.includes(scope));
 ```
 
-## Evidence and limits
+```ts
+if (received > expectedBytes || received > maxBytes) {
+  callback(new BinaryLengthError("binary body exceeds declared size"));
+  return;
+}
+```
 
-The screenshot below shows SOTATSU’s public gallery as captured on 2026-10-05. It documents the visible site only; it does not verify API or provider deployment. Code paths and file hashes are listed in [SOURCE_PROVENANCE.json](docs/SOURCE_PROVENANCE.json). Fixtures contain no production data. This exhibit does not publish the private application or repository history.
+These excerpts are in [Artist API policy](src/artist-api-policy.ts) and [binary upload handling](src/binary-upload.ts). Source revision and file hashes are recorded in [SOURCE_PROVENANCE.json](docs/SOURCE_PROVENANCE.json).
 
-![Public SOTATSU gallery screenshot captured 2026-10-05](docs/screenshots/sotatsu-public.jpg)
+## Gallery
 
-![Local synthetic playground preview captured 2026-10-05](docs/screenshots/sotatsu-engineering-local.jpg)
-
-Released under the MIT License.
+![SOTATSU public gallery, captured 5 October 2026](docs/screenshots/sotatsu-public.jpg)
