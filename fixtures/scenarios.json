@@ -1,0 +1,16 @@
+{
+  "key": {
+    "granted": ["projects:read", "assets:write"],
+    "requested": "assets:write"
+  },
+  "studio": {
+    "activeStudio": "studio-synthetic-01",
+    "requestedAsset": "asset-synthetic-01",
+    "otherStudio": "studio-synthetic-02"
+  },
+  "upload": {
+    "declaredBytes": "4096",
+    "actualBytes": 4096,
+    "maximumBytes": 10485760
+  }
+}

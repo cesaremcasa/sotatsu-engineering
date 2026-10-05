@@ -1,0 +1,49 @@
+{
+  "exhibit": "SOTATSU engineering exhibit",
+  "source_repository": "Sotatsu",
+  "source_branch": "codex/sotatsu-engineering",
+  "source_base_commit": "8308bc39e393e3cdc733fbcf745d361f181ca899",
+  "source_state_note": "Selected files copied from the reviewed correction branch; only listed modules and synthetic data are included.",
+  "components": [
+    {
+      "source_path": "apps/api/src/lib/artist-api-policy.ts",
+      "exhibit_path": "src/artist-api-policy.ts",
+      "sha256": "4ce5eaf7169055c4f6ba6d3ae19e636ed3505921daa2bc9675b20c238d625183"
+    },
+    {
+      "source_path": "apps/api/src/lib/upload-policy.ts",
+      "exhibit_path": "src/upload-policy.ts",
+      "sha256": "8f88fcee1a987fc09ff2071f9e152a85aedb2b7e176e4ddca8dc085b55461282"
+    },
+    {
+      "source_path": "apps/api/src/lib/binary-upload.ts",
+      "exhibit_path": "src/binary-upload.ts",
+      "sha256": "8bc3e83ba695e828e10525274e7b276767095796b892eab5943b1828a03c37c0"
+    },
+    {
+      "source_path": "apps/api/src/lib/upload-completion.ts",
+      "exhibit_path": "src/upload-completion.ts",
+      "sha256": "9ff268f3d672ec277757245f9f67b003092257692e79b7dfc06fa60439396f23"
+    },
+    {
+      "source_path": "apps/worker/src/pipeline/safety-verdict.ts",
+      "exhibit_path": "src/safety-verdict.ts",
+      "sha256": "1987bce5184b8fc939e96445eec130bfbf2821510c938d214c24ef030100e004"
+    }
+  ],
+  "screenshot": {
+    "source_url": "https://sotatsu.com",
+    "captured_at": "2026-10-05",
+    "exhibit_path": "docs/screenshots/sotatsu-public.jpg",
+    "sha256": "ebc9b41428108410279b842041f3996064cbf70169570fed8666d0c132c88c96",
+    "scope": "Public gallery appearance only; not evidence of API, worker, or provider deployment."
+  },
+  "local_preview": {
+    "captured_at": "2026-10-05",
+    "exhibit_path": "docs/screenshots/sotatsu-engineering-local.jpg",
+    "sha256": "997cb8e3d7b1267e4b047ce3e958072c972fe939d3beb2d1daee9fcfa3884953",
+    "scope": "Local React exhibit with synthetic denied-scope, mismatched-byte, and provider-outage states."
+  },
+  "fixtures": "All scenarios in fixtures/ are synthetic.",
+  "source_commit": "7064135"
+}
